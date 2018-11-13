@@ -1,39 +1,40 @@
 CREATE TABLE IF NOT EXISTS Item (
-        IID         INTEGER NOT NULL,  -- SMALL : Oracle NUMBER(5, 0)
-        type        VARCHAR(10),        -- VARCHAR: Oracle VARCHAR2()
-        name        VARCHAR(30),
+        IID         BIGSERIAL NOT NULL,  -- SMALL : Oracle NUMBER(5, 0)
+        type        VARCHAR(20),        -- VARCHAR: Oracle VARCHAR2()
+        Iname        VARCHAR(30),
         condition   VARCHAR(4),
-        maker       VARCHAR(10),
+        maker       VARCHAR(20),
         msrb        CHAR(2),
 	PRIMARY KEY (IID)
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Customer (
-	CID	            INTEGER	 NOT NULL,
-	name	        VARCHAR(20)	 NOT NULL,
- 	street          VARCHAR(10)   NOT NULL,
+	CID	            BIGSERIAL	 NOT NULL,
+	name	        VARCHAR(25)	 NOT NULL,
+ 	street          VARCHAR(20)   NOT NULL,
  	num             SMALLINT NOT NULL,
- 	city	        VARCHAR(10) NOT NULL,
+ 	city	        VARCHAR(20) NOT NULL,
  	state           CHAR(2) NOT NULL, -- oracle NUMBER((3,0)
-    zip             SMALLINT NOT NULL,
+    zip             INTEGER NOT NULL,
     phone           INTEGER,
 	CONSTRAINT pk_Customer PRIMARY KEY (CID)
-
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Warehouse (
-	WID	            INTEGER	 NOT NULL,
-	name	        VARCHAR(20)	 NOT NULL,
- 	street          VARCHAR(10)   NOT NULL,
+	WID	            BIGSERIAL	 NOT NULL,
+	name	        VARCHAR(50)	 NOT NULL,
+ 	street          VARCHAR(20)   NOT NULL,
  	num             SMALLINT NOT NULL,
- 	city	        VARCHAR(10) NOT NULL,
+ 	city	        VARCHAR(20) NOT NULL,
  	state           CHAR(2) NOT NULL, -- oracle NUMBER((3,0)
-    zip             SMALLINT NOT NULL,
+    zip             Integer NOT NULL,
 	CONSTRAINT pk_Warehouse PRIMARY KEY (WID)
-
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Warehouse_inventory (
 	WID	            INTEGER    NOT NULL,
     IID         INTEGER NOT NULL,
- 	quantity        VARCHAR(10) NOT NULL,
+ 	quantity        SMALLINT NOT NULL,
 	PRIMARY KEY (WID,IID),
     CONSTRAINT fk_WarehouseI_warehouse FOREIGN KEY (WID)
 			      REFERENCES Warehouse(WID)
@@ -43,23 +44,23 @@ CREATE TABLE  IF NOT EXISTS Warehouse_inventory (
 			      REFERENCES Item(IID)
 			      ON DELETE CASCADE
 			      ON UPDATE CASCADE
-
-
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Shipper (
-	SHID	            INTEGER	 NOT NULL,	
+	SHID	        BIGSERIAL	 NOT NULL,	
 	name	        VARCHAR(20)	 NOT NULL,
 	CONSTRAINT pk_Shipper PRIMARY KEY (SHID)	
      )  TABLESPACE ezdata ;
+	 
 CREATE TABLE  IF NOT EXISTS Employee (
-	EID	            INTEGER	 NOT NULL,
+	EID	            BIGSERIAL	 NOT NULL,
 	WID				INTEGER	 NOT NULL,
 	name	        VARCHAR(20)	 NOT NULL,
- 	street          VARCHAR(10)   NOT NULL,
+ 	street          VARCHAR(20)   NOT NULL,
  	num             SMALLINT NOT NULL,
- 	city	        VARCHAR(10) NOT NULL,
+ 	city	        VARCHAR(20) NOT NULL,
  	state           CHAR(2) NOT NULL, -- oracle NUMBER((3,0)
-    zip             SMALLINT NOT NULL,
+    zip             INTEGER NOT NULL,
     phone           INTEGER,
 	
 	CONSTRAINT pk_Employee PRIMARY KEY (EID),
@@ -67,15 +68,14 @@ CREATE TABLE  IF NOT EXISTS Employee (
 			      REFERENCES Warehouse(WID)
 			      ON DELETE CASCADE
 			      ON UPDATE CASCADE
-
-
      )  TABLESPACE ezdata ;
+
  CREATE TABLE IF NOT EXISTS  Ord (
-	OID	            INTEGER NOT NULL,  -- mysl: INT/INTEGER Oracle NUMBER(10,0)
+	OID	            BIGSERIAL NOT NULL,  -- mysl: INT/INTEGER Oracle NUMBER(10,0)
  	CID             INTEGER NOT NULL,
  	EID             INTEGER NOT NULL,
 	date_processed  DATE,
-	note            VARCHAR(15) default '' , 
+	note            VARCHAR(155) default '' , 
 	order_date      DATE ,
 	PRIMARY KEY (OID),
     CONSTRAINT fk_Ord_Customer FOREIGN KEY (CID)
@@ -92,8 +92,8 @@ CREATE TABLE  IF NOT EXISTS Employee (
  CREATE TABLE IF NOT EXISTS  Ord_contains (
 	OID		    INTEGER,
 	IID		    INTEGER NOT NULL,
- 	quantity        VARCHAR(10) NOT NULL,
- 	s_price       VARCHAR(50)  ,
+ 	quantity    SMALLINT NOT NULL,
+ 	s_price     Integer  ,
 	PRIMARY KEY (OID,IID),
     CONSTRAINT fk_Ordc_Ord FOREIGN KEY (OID)
 			      REFERENCES Ord(OID)
@@ -106,12 +106,11 @@ CREATE TABLE  IF NOT EXISTS Employee (
 
      )  TABLESPACE ezdata ;
 
-
  CREATE TABLE  IF NOT EXISTS Payment (
-	PID	            INTEGER    NOT NULL,
+	PAID	            BIGSERIAL    NOT NULL,
 	OID	            INTEGER    NOT NULL,
- 	gift_num        INTEGER     , 
- 	card_num        INTEGER     , 
+ 	gift_num        CHAR(20)     , 
+ 	card_num        CHAR(20)     , 
 	card_expire     INTEGER     , 
  	card_security   INTEGER     , 
  	check_number    INTEGER     , 
@@ -119,30 +118,31 @@ CREATE TABLE  IF NOT EXISTS Employee (
  	check_acc       INTEGER     ,  
  	amount          INTEGER    NOT NULL,  
 	-- table constraints
-	CONSTRAINT pk_Payment PRIMARY KEY (PID),
+	CONSTRAINT pk_Payment PRIMARY KEY (PAID),
 	CONSTRAINT fk_Payment_Ord FOREIGN KEY (OID)
 				      REFERENCES Ord(OID)
 				      ON DELETE CASCADE
 				      ON UPDATE CASCADE
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Supplier (
-	SPID	            INTEGER	 NOT NULL,
+	SPID	        BIGSERIAL	 NOT NULL,
 	name	        VARCHAR(20)	 NOT NULL,
- 	street          VARCHAR(10)   NOT NULL,
+ 	street          VARCHAR(20)   NOT NULL,
  	num             SMALLINT NOT NULL,
- 	city	        VARCHAR(10) NOT NULL,
+ 	city	        VARCHAR(20) NOT NULL,
  	state           CHAR(2) NOT NULL, -- oracle NUMBER((3,0)
-    zip             SMALLINT NOT NULL,
+    zip             INTEGER NOT NULL,
 	CONSTRAINT pk_Supplier PRIMARY KEY (SPID)
 
      )  TABLESPACE ezdata ;
 
 CREATE TABLE  IF NOT EXISTS Supply_Ord (
-	SID	            INTEGER    NOT NULL,
+	SID	            BIGSERIAL    NOT NULL,
 	EID	            INTEGER    NOT NULL,
  	SPID       INTEGER  NOT NULL   , 
  	WID        INTEGER NOT NULL    , 
-	supply_date     INTEGER     ,  
+	supply_date     DATE     ,  
 	-- table constraints
 	CONSTRAINT pk_supplyOrd PRIMARY KEY (SID),
     CONSTRAINT fk_supplyo_supplier FOREIGN KEY (SPID)
@@ -156,15 +156,13 @@ CREATE TABLE  IF NOT EXISTS Supply_Ord (
 	CONSTRAINT fk_supplyo_warehouse FOREIGN KEY (WID)
 				      REFERENCES Warehouse(WID)
 				      ON DELETE CASCADE
-				      ON UPDATE CASCADE
-                      
+				      ON UPDATE CASCADE    
      )  TABLESPACE ezdata ;
-
 
 CREATE TABLE  IF NOT EXISTS Supply_contains (
     SID	            INTEGER    NOT NULL,
     IID         INTEGER NOT NULL,
- 	quantity        VARCHAR(10) NOT NULL,
+ 	quantity        VARCHAR(20) NOT NULL,
  	p_price       VARCHAR(50)  ,
 	PRIMARY KEY (SID,IID),
     CONSTRAINT fk_Supplyc_Supply FOREIGN KEY (SID)
@@ -175,29 +173,26 @@ CREATE TABLE  IF NOT EXISTS Supply_contains (
 			      REFERENCES Item(IID)
 			      ON DELETE CASCADE
 			      ON UPDATE CASCADE
-
      )  TABLESPACE ezdata ;
  
-
 CREATE TABLE  IF NOT EXISTS Status (
 	OID		 	INTEGER NOT NULL,
-	state		VARCHAR(10) DEFAULT 'pending',
+	state		VARCHAR(20) DEFAULT 'pending',
 	notes		VARCHAR(20),
 	CONSTRAINT pk_Status PRIMARY KEY (OID),
 	CONSTRAINT fk_Status_Ord FOREIGN KEY (OID)
 			    REFERENCES Ord(OID)
 			    ON DELETE CASCADE
 			    ON UPDATE CASCADE
-
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Package (
-	PID		 	INTEGER NOT NULL,
+	PID		 	BIGSERIAL NOT NULL,
 	OID		 	INTEGER NOT NULL,
 	EID		 	INTEGER NOT NULL,
 	SHID		 	INTEGER NOT NULL,
 	weight		 	INTEGER NOT NULL,
-	size		 	VARCHAR(10) NOT NULL,
-
+	size		 	VARCHAR(20) NOT NULL,
 	CONSTRAINT pk_Package PRIMARY KEY (PID)	,
 	CONSTRAINT fk_Package_Ord FOREIGN KEY (OID)
 			    REFERENCES Ord(OID)
@@ -212,10 +207,11 @@ CREATE TABLE  IF NOT EXISTS Package (
 			    ON DELETE CASCADE
 			    ON UPDATE CASCADE
      )  TABLESPACE ezdata ;
+
 CREATE TABLE  IF NOT EXISTS Package_contains (
 	PID	            INTEGER    NOT NULL,
     IID         INTEGER NOT NULL,
- 	quantity        VARCHAR(10) NOT NULL,
+ 	quantity        VARCHAR(20) NOT NULL,
 	PRIMARY KEY (PID,IID),
     CONSTRAINT fk_Packagec_package FOREIGN KEY (PID)
 			      REFERENCES Package(PID)
@@ -225,7 +221,5 @@ CREATE TABLE  IF NOT EXISTS Package_contains (
 			      REFERENCES Item(IID)
 			      ON DELETE CASCADE
 			      ON UPDATE CASCADE
-
-
      )  TABLESPACE ezdata ;
 
