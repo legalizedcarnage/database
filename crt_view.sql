@@ -7,3 +7,8 @@ CREATE OR REPLACE View vOrders AS
 SELECT  c.name, i.iname, oc.quantity, o.order_date 
 FROM Item i NATURAL JOIN Ord_contains oc NATURAL JOIN Ord o NATURAL JOIN Customer c
 ;
+
+CREATE OR REPLACE View employeeList AS
+SELECT  e.eid, e.name, e.phone
+FROM employee e 
+;
