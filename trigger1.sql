@@ -14,6 +14,6 @@ CREATE OR REPLACE FUNCTION
 	END;$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER emp_delete
-    BEFORE DELETE ON employee
+    AFTER DELETE ON employee
     FOR EACH ROW
     EXECUTE PROCEDURE delete_employee();
