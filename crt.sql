@@ -6,3 +6,4 @@
 \i trigger1.sql
 \i trigger2.sql
 \i trigger3.sql
+\i crt_procedure.sql

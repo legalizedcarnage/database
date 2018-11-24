@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS Item (
         condition   VARCHAR(4),
         maker       VARCHAR(20),
         msrb        CHAR(2),
+		price 		INTEGER,
 	PRIMARY KEY (IID)
      )  TABLESPACE ezdata ;
 
@@ -73,7 +74,7 @@ CREATE TABLE  IF NOT EXISTS Employee (
  CREATE TABLE IF NOT EXISTS  Ord (
 	OID	            BIGSERIAL NOT NULL,  -- mysl: INT/INTEGER Oracle NUMBER(10,0)
  	CID             INTEGER NOT NULL,
- 	EID             INTEGER NOT NULL,
+ 	EID             INTEGER ,
 	date_processed  DATE,
 	note            VARCHAR(155) default '' , 
 	order_date      DATE ,
