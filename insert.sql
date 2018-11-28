@@ -13,17 +13,17 @@ VALUES ('Joe Schmoe','Goldfield Dr.',117,'Schaumburg','IL',60193,5551234),
 
 
 
-INSERT INTO Item (type,Iname,condition,maker,msrb)
-VALUES ('game','Minecraft','new','Mojang','E'), 
-('Console','Xbox','new','Microsoft',NULL),
-('game','Mario','used','Nintendo','E'),
-('game','Sonic','new','Sega','E'),
-('game','Pokemon','new','Gamefreak','E'),
-('game','Halo','new','Bungie','M'),
-('game','Halo','used','Bungie','M'),
-('game','Zelda','new','Nintendo','E'),
-('game','Halo 2','used','Bungie','M'),
-('console','PS4','used','Sony',NULL);
+INSERT INTO Item (type,Iname,condition,maker,msrb,console)
+VALUES ('game','Minecraft','new','Mojang','E','xbox'), 
+('Console','Xbox','new','Microsoft',NULL,'xbox'),
+('game','Mario','used','Nintendo','E','switch'),
+('game','Sonic','new','Sega','E','switch'),
+('game','Pokemon','new','Gamefreak','E','switch'),
+('game','Halo','new','Bungie','M','xbox'),
+('game','Halo','used','Bungie','M','xbox'),
+('game','Zelda','new','Nintendo','E','switch'),
+('game','Halo 2','used','Bungie','M','xbox'),
+('console','PS4','used','Sony',NULL,'playstation');
 
 
 INSERT INTO Warehouse (name,street,num,city,state,zip)
