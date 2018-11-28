@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS Item (
         maker       VARCHAR(20),
         msrb        CHAR(2),
 		price 		INTEGER,
+		console 		varchar(20),
+
 	PRIMARY KEY (IID)
      )  TABLESPACE ezdata ;
 
