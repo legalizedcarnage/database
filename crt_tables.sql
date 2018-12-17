@@ -77,6 +77,7 @@ CREATE TABLE  IF NOT EXISTS Employee (
 	OID	            BIGSERIAL NOT NULL,  -- mysl: INT/INTEGER Oracle NUMBER(10,0)
  	CID             INTEGER NOT NULL,
  	EID             INTEGER ,
+	WID				INTEGER,
 	date_processed  DATE,
 	note            VARCHAR(155) default '' , 
 	order_date      DATE ,
@@ -88,7 +89,11 @@ CREATE TABLE  IF NOT EXISTS Employee (
     CONSTRAINT fk_Ord_Manager FOREIGN KEY (EID)
 			      REFERENCES Employee(EID)
 			      ON DELETE CASCADE
-			      ON UPDATE CASCADE
+			      ON UPDATE CASCADE,
+	CONSTRAINT fk_Ord_warehouse FOREIGN KEY (WID)
+				  REFERENCES Warehouse(WID)
+				  ON DELETE CASCADE
+				  ON UPDATE CASCADE
 
     )  TABLESPACE ezdata ;
 	

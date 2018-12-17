@@ -86,17 +86,64 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+CREATE OR REPLACE FUNCTION lesserDate(
+       in date1 date,
+       in date2 date,
+       out lesser date
+) AS $$
+BEGIN
+  lesser = least(date1::date, date2::date);
+END; 
+$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION greaterDate(
+       in date1 date,
+       in date2 date,
+       out greater date
+) AS $$
+BEGIN
+  greater = greatest(date1::date, date2::date);
+END; 
+$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION bestSellersBetweenDates(
+        in date1 date,
+        in date2 date
+)
+RETURNS TABLE (
+        
+        Amount_Sold BIGINT,
+        Item_Name VARCHAR
+)
+AS $$
+BEGIN
+  RETURN QUERY 
+  SELECT count(IID) as sold, Iname as itemName 
+  FROM Ord_contains natural join item natural join ord
+  WHERE ord.date_processed > lesserDate(date1, date2) AND ord.date_processed < greaterDate(date1, date2)
+  group by itemName
+  order by sold desc;
+END;
+$$ LANGUAGE plpgsql;
 
-
-
-
-
-
-
-
-
+CREATE OR REPLACE FUNCTION totalSalesBetweenDates(
+        in date1 date,
+        in date2 date
+  )
+  RETURNS TABLE (
+          total_revenue BIGINT,
+          total_orders BIGINT,
+          start_month date
+  )
+  AS $$
+  BEGIN 
+    RETURN QUERY 
+    SELECT SUM(amount) AS total, count(PAID) as totalOrders, date1::date
+    FROM payment natural join ord
+    WHERE ord.date_processed > lesserDate(date1, date2) AND ord.date_processed < greaterDate(date1, date2)
+    ;
+    END;
+    $$ LANGUAGE plpgsql;
 
 
 
