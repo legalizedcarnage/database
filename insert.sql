@@ -75,17 +75,17 @@ VALUES ('Joe schmoe','Goldfield Dr.',117,'Schaumburg','IL',60193,5551234,3),
 ('Bertram Cormaic','Arch st',9965,'Trumbull','CT',06611,5551112,6), 
 ('Heidi Hoover','Parker st',9954,'Sylvania','OH',43560,5556785,7);
 
-INSERT INTO  Ord (	CID, 	EID,	date_processed  ,	note, 	order_date)
-VALUES (1,1,'2017-10-21',NULL,'2017-10-21'),
-(1,3,'2017-10-22',NULL,'2017-10-22'),
-(2,5,'2017-10-25',NULL,'2017-10-25'),
-(1,2,'2017-11-2',NULL,'2017-11-1'),
-(3,4,'2018-1-12',NULL,'2018-1-10'),
-(4,6,'2018-2-27',NULL,'2018-2-27'),
-(5,7,'2018-4-1',NULL,'2018-4-1'),
-(2,8,'2018-5-8','Closest warehouse A out of stock, sending to warehouse B. Ordering stock for warehouse A.','2018-5-8'),
-(8,10,'2018-7-18',NULL,'2018-7-16'),
-(6,9,'2018-10-23',NULL,'2018-10-23');
+INSERT INTO  Ord (	CID, 	EID,    date_processed,	    note,    WID, 	order_date)
+VALUES (1,1,NULL,NULL,NULL,'2017-10-21'),
+(1,3,'2017-10-22',NULL, 3,'2017-10-22'),
+(2,5,NULL,NULL,NULL,'2017-10-25'),
+(1,2,'2017-11-2',NULL,4,'2017-11-1'),
+(3,4,'2018-1-12',NULL,5,'2018-1-10'),
+(4,6,'2018-2-27',NULL,6,'2018-2-27'),
+(5,7,'2018-4-1',NULL,7,'2018-4-1'),
+(2,8,'2018-5-8','Closest warehouse A out of stock, sending to warehouse B. Ordering stock for warehouse A.',8,'2018-5-8'),
+(8,10,'2018-7-18',NULL,9,'2018-7-16'),
+(6,9,'2018-10-23',NULL,10,'2018-10-23');
 
 
 INSERT INTO  Ord_contains (OID,	IID, 	quantity, 	s_price)
@@ -143,7 +143,7 @@ VALUES (1,1,1,'2017-10-25'),
 
 
 INSERT INTO Status (	OID,	state,	notes)
-VALUES (1,'Shipped',NULL),
+VALUES (1,'Pending',NULL),
 (2,'Shipped',NULL),
 (3,'Pending',NULL),
 (4,'Shipped',NULL),
