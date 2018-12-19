@@ -28,3 +28,8 @@ LIMIT 10;
 CREATE OR REPLACE View totalSales AS
 SELECT SUM(amount) AS total, count(PAID) as totalOrders from payment
 ;
+
+CREATE OR REPLACE View sortedOrders AS
+SELECT * FROM ord natural join status
+order by order_date desc
+;
